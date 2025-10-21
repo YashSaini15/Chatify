@@ -74,7 +74,7 @@ export const login = async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password are required" });
   }
-  
+
   try {
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invaild credentials" });
@@ -115,7 +115,7 @@ export const updateProfile = async (req, res) => {
         profilePic: uploadResponse.secure_url,
       },
       { new: true }
-    );
+    ).select("-password");
 
     res.status(200).json(updatedUser);
   } catch (error) {
